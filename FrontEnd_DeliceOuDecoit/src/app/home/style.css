@@ -27,7 +27,7 @@ body {
     font-weight: normal;
     overflow-x: hidden;
     font-family: 'Poppins', sans-serif;
-    background: #6c757d;
+    background: #000;
 }
 
 a {
@@ -196,7 +196,7 @@ button {
 }
 
 .layout_padding {
-     padding-top: 90px;
+     padding-top: 200px;
      padding-bottom: 0px;
 }
 
@@ -208,7 +208,7 @@ button {
 .header_section {
     width: 100%;
     float: left;
-    background-image: url(../assets/bg/bbg-rs3.png);
+    background-image: url(../../assets/bg/bbg-rs3.png);
     height: auto;
     background-size: 100%;
     padding: 0px 0px 50px 0px;
@@ -311,9 +311,10 @@ button {
 
 .header_main {
     width: 100%;
-    background-image: url(../assets/images/header-bg.png);
+    background-image: url(../../assets/images/header-bg.png);
     background-size: 100%;
     padding: 10px 0px 37px 0px;
+    margin-top: -25px;
 }
 
 /* header section end */
@@ -394,7 +395,7 @@ button {
 .background_bg{
     width: 100%;
     float: left;
-    background-image: url(../assets/images/pizzabg.jpg);
+    background-image: url(../../assets/images/pizzabg.jpg);
     height: auto;
 }
 /* background bg section end */
@@ -560,7 +561,7 @@ h1.watchs_taital::after {
 .testimonial_section{
     width: 100%;
     float: left;
-    background-image: url(../assets/images/testimonial-bg.png);
+    background-image: url(../../assets/images/testimonial-bg.png);
     height: auto;
     background-size: 100%;
     background-repeat: no-repeat;
@@ -734,7 +735,7 @@ textarea#comment::placeholder {
 .footer_section {
     width: 100%;
     float: left;
-    background-image: url(../assets/images/footer-bg.png);
+    background-image: url(../../assets/images/footer-bg.png);
     height: auto;
     padding-top: 90px;
     background-size: 100% 100%;

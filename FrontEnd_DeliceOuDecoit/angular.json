@@ -27,20 +27,20 @@
             "styles": [
               "src/styles.css",
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
-               "node_modules/bootstrap/dist/css/bootstrap.min.css",
-               "src/navbar/bootstrap.min.css",
-               "src/navbar/font-awesome.css",
-               "src/navbar/style.css"
-
-           
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "src/navbar/bootstrap.min.css",
+              "src/navbar/font-awesome.css",
+              "src/navbar/style.css"
+             
             ],
             "scripts": [
-             "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/jquery/dist/jquery.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
               "src/navbar/bootstrap.bundle.min.js",
-              "src/navbar/jquery.min.js"
-          
+              "src/navbar/jquery.min.js",
+              "node_modules/chart.js/dist/chart.js",
+               "src/assets/js/login.js"
             ]
           },
           "configurations": {
