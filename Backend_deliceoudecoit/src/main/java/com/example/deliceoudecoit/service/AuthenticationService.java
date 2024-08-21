@@ -79,12 +79,15 @@ public class AuthenticationService {
         User user = repository.findByUsername(request.getUsername()).orElseThrow();
         String accessToken = jwtService.generateAccessToken(user);
         String refreshToken = jwtService.generateRefreshToken(user);
+        String username = user.getUsername();
+        String firstname = user.getFirstName();
+        String lastname = user.getLastName();
+        String role = String.valueOf(user.getRole());
 
         revokeAllTokenByUser(user);
         saveUserToken(accessToken, refreshToken, user);
 
-        return new AuthenticationResponse(accessToken, refreshToken, "User login was successful");
-
+        return new AuthenticationResponse(accessToken, refreshToken, "User login was successful", username, firstname, lastname, role);
     }
     private void revokeAllTokenByUser(User user) {
         List<Token> validTokens = tokenRepository.findAllAccessTokensByUser(user.getId());

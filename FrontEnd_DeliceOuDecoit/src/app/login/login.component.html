@@ -1,13 +1,9 @@
-<!DOCTYPE html>
-<html lang="en" >
-<head>
-  <meta charset="UTF-8">
-  <title>CodePen - Login &amp; Sign Up Form Concept</title>
+
   <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans:400,300'>
 <link rel='stylesheet' href='https://fonts.googleapis.com/icon?family=Material+Icons'>
 
-</head>
-<body>
+
+
 <!-- partial:index.partial.html -->
 <div class="cotn_principal">
 <div class="cont_centrar">
@@ -17,19 +13,19 @@
       <div class="col_md_login">
 <div class="cont_ba_opcitiy">
         
-        <h2>LOGIN</h2>  
-  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p> 
-  <button class="btn_login" (click)="changeToLogin()">LOGIN</button>
+        <h2>Se connecter</h2>  
+  <p>Avec Delice ou Déçoit choisir votre bon plan et donner des avis sur votre expérience</p> 
+  <button class="btn_login" (click)="changeToLogin()">Se connecter</button>
   </div>
   </div>
 <div class="col_md_sign_up">
 <div class="cont_ba_opcitiy">
-  <h2>SIGN UP</h2>
+  <h2>Créer nouveau compte</h2>
 
   
-  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+  <p>S’inscrire C’est simple et rapide.</p>
 
-  <button class="btn_sign_up" (click)="changeToSignUp()">SIGN UP</button>
+  <button class="btn_sign_up" (click)="changeToSignUp()">S’inscrire</button>
 </div>
   </div>
        </div>
@@ -45,14 +41,15 @@
     <div class="cont_img_back_">
        <img src="../../assets/bg/bg-rs4.jpg" alt="" />
        </div>
+       <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
  <div class="cont_form_login">
     <a routerLink="/home" (click)="hiddenLoginAndSignUp()"><i class="material-icons">&#xE5C4;</i></a>
-   <h2>LOGIN</h2>
- <input type="text" placeholder="Email" />
-<input type="password" placeholder="Password" />
-<button class="btn_login" (click)="changeToLogin()">LOGIN</button>
+    <h2>Se connecter</h2>
+ <input type="email" ngModel name="username" id="username" placeholder="Email" />
+ <input type="password" ngModel name="password" id="password" placeholder="Password" />
+ <button type="submit" class="btn_login" (click)="changeToLogin()">LOGIN</button>
   </div>
-  
+</form>
    <div class="cont_form_sign_up">
     <a routerLink="/home" (click)="hiddenLoginAndSignUp()"><i class="material-icons">&#xE5C4;</i></a>
      <h2>SIGN UP</h2>
@@ -72,5 +69,3 @@
 <!-- partial -->
   <script  src="../../assets/js/login.js"></script>
 
-</body>
-</html>

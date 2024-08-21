@@ -1,4 +1,9 @@
 import { Component, AfterViewInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
+import { UserService } from 'src/service/user.service';
+import { AuthUserService } from 'src/service/auth-user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +17,11 @@ export class LoginComponent implements AfterViewInit {
   private timeToHideSignUp = 400;
   private timeToHideAll = 500;
 
-  constructor() {}
+  constructor(private userService:UserService,
+    private userAuthService:AuthUserService,
+    private router: Router,
+    public dialogRef: MatDialogRef<LoginComponent>
+  ) {}
 
   ngAfterViewInit() {
     // Ensure that the DOM is ready before manipulating it
@@ -74,4 +83,31 @@ export class LoginComponent implements AfterViewInit {
       }, this.timeToHideAll);
     }
   }
+
+  login(loginForm: NgForm) {
+    if (loginForm.valid) {
+      const formData = loginForm.value;
+      this.userService.login(loginForm.value).subscribe(
+        (response: any) => {
+          this.userAuthService.setRoles(response.role);
+          this.userAuthService.setToken(response.access_token);
+          this.dialogRef.close();
+  
+          const role = response.role;
+          console.log('ok',role);
+          if (role === 'ADMIN') {
+            this.router.navigate(['/admin']);
+          } else {
+            this.router.navigate(['/user']);
+          }
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
+  }
+
+
+
 }

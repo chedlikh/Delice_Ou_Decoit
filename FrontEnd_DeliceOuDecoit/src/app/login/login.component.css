@@ -10,6 +10,8 @@
   }
   
   .cotn_principal {
+    height: 0;
+  overflow: hidden;
     position: absolute;
     width: 100%;
     display: flex;
@@ -38,6 +40,7 @@
   }
   
   .cont_centrar {
+    
     display: flex;
     align-self: center;
     width: 100%;

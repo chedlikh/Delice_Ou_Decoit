@@ -4,6 +4,7 @@
   <!-- header section start -->
   <div class="header_sectionn">
     <div class="header_main">
+      
       <div class="mobile_menu">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
           <div class="logo_mobile"><a routerLink="/home"><img src="../assets/images/logo-delice.png"></a></div>
@@ -11,8 +12,10 @@
             
             <span class="navbar-toggler-icon"></span>
           </button>
+          
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
+              
               <li class="nav-item active">
                 <a class="nav-link" routerLink="/home">Acceuil</a>
               </li>
@@ -31,6 +34,7 @@
               <li class="nav-item">
                 <a class="nav-link " href="#"><img src="../assets/images/search-icon.png"></a>
               </li>
+              
             </ul>
           </div>
         </nav>
@@ -38,9 +42,16 @@
       
       
       <div class="container-fluid">
-         
+        
+       
         <div class="logo"><a routerLink="/home"><img src="../assets/images/logo-delice.png" style="width: 400px; height: 90px;"></a>
-         <div class="read_btp"><a routerLink="/home">Connexion</a></div>
+          <div class="read_btp">
+            <!-- Button for "Connexion" if not logged in -->
+            <button *ngIf="!isLoggedIn()" mat-button routerLink="/home">Connexion</button>
+          
+            <!-- Button for "Déconnexion" if logged in -->
+            <button *ngIf="isLoggedIn()" mat-button (click)="logOut()">Déconnexion</button>
+          </div>
           </div>
         <div class="menu_main">
           <ul>
@@ -49,6 +60,12 @@
             <li><a href="watchs.html">Bon plan</a></li>
             
             <li><a href="contact.html">Contactez-nous</a></li>
+            <li *ngIf="userService.roleMatch(['USER'])">
+              <a href="contact.html">Welcome, USER!</a>
+            </li>
+            <li *ngIf="userService.roleMatch(['ADMIN'])">
+              <a href="contact.html">Welcome, Admin!</a>
+            </li>
             <li><a href="#"><img src="../assets/images/search-icon.png"></a></li>
           </ul>
         </div>
