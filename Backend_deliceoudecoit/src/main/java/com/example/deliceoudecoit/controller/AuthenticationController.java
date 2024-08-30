@@ -1,22 +1,39 @@
 package com.example.deliceoudecoit.controller;
 
+import com.example.deliceoudecoit.dao.UserRepository;
 import com.example.deliceoudecoit.entities.AuthenticationResponse;
 import com.example.deliceoudecoit.entities.User;
 import com.example.deliceoudecoit.service.AuthenticationService;
+import com.example.deliceoudecoit.service.UserDetailsServiceImp;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.security.Principal;
 
 @RestController
 public class AuthenticationController {
+    @Autowired
+    private UserDetailsServiceImp userDetailsServiceImp;
 
     private final AuthenticationService authService;
+    private final UserRepository repository;
 
-    public AuthenticationController(AuthenticationService authService) {
+
+
+
+    public AuthenticationController(AuthenticationService authService,UserRepository repository) {
         this.authService = authService;
+        this.repository = repository;
     }
 
 
@@ -41,4 +58,107 @@ public class AuthenticationController {
     ) {
         return authService.refreshToken(request, response);
     }
+
+    @GetMapping("/me")
+    public ResponseEntity<AuthenticationResponse> getProfile() {
+        // Retrieve the Authentication object from SecurityContextHolder
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        // Ensure `getPrincipal` returns `UserDetails`
+        if (authentication == null || !(authentication.getPrincipal() instanceof UserDetails)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+        // Retrieve the User entity based on the username
+        User user = repository.findByUsername(userDetails.getUsername())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+        // Create the response object with user profile details
+        AuthenticationResponse profileResponse = new AuthenticationResponse(
+                null, // No access token needed
+                null, // No refresh token needed
+                "User profile retrieved successfully",
+                user.getUsername(),
+                user.getFirstName(),
+                user.getlastname(),
+                user.getRole().name(), // Convert Role to String
+                user.getDatenaissance(),
+                user.getGender(),
+                user.getNumberphone(),
+                user.getCountry(),
+                user.getState()
+        );
+
+        return ResponseEntity.ok(profileResponse);
+    }
+    @PutMapping("/me")
+    public ResponseEntity<AuthenticationResponse> updateProfile(@RequestBody AuthenticationResponse updateRequest) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        // Ensure `getPrincipal` returns `UserDetails`
+        if (authentication == null || !(authentication.getPrincipal() instanceof UserDetails)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+        // Retrieve the User entity based on the username
+        User user = repository.findByUsername(userDetails.getUsername())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+        // Update user profile
+        user.setFirstName(updateRequest.getFirstname());
+        user.setlastname(updateRequest.getlastname());
+        user.setDatenaissance(updateRequest.getDatenaissance());
+        user.setGender(updateRequest.getGender());
+        user.setNumberphone(updateRequest.getnumberphone());
+        user.setCountry(updateRequest.getCountry());
+        user.setState(updateRequest.getState());
+
+        User updatedUser = userDetailsServiceImp.updateUser(user);
+
+        // Create response object
+        AuthenticationResponse profileResponse = new AuthenticationResponse(
+                null, // No access token needed
+                null, // No refresh token needed
+                "User profile updated successfully",
+                updatedUser.getUsername(),
+                updatedUser.getFirstName(),
+                updatedUser.getlastname(),
+                updatedUser.getRole().toString(),
+                updatedUser.getDatenaissance(),
+                updatedUser.getGender(),
+                updatedUser.getNumberphone(),
+                updatedUser.getCountry(),
+                updatedUser.getState()
+        );
+
+        return ResponseEntity.ok(profileResponse);
+    }
+    @DeleteMapping("/me")
+    public ResponseEntity<String> deleteProfile() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null || !(authentication.getPrincipal() instanceof UserDetails)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
+        }
+
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        userDetailsServiceImp.deleteUserByUsername(userDetails.getUsername());
+
+        return ResponseEntity.ok("User profile deleted successfully");
+    }
+    @PostMapping("/uploadProfileImage")
+    public ResponseEntity<?> uploadProfileImage(@RequestParam("username") String username, @RequestParam("file") MultipartFile file) {
+        try {
+            User user = userDetailsServiceImp.uploadProfileImage(username, file);
+            return ResponseEntity.ok("Profile image uploaded successfully. Image path: " + user.getProfileImage());
+        } catch (IOException e) {
+            return ResponseEntity.status(500).body("Failed to upload image: " + e.getMessage());
+        }
+    }
+
+
 }

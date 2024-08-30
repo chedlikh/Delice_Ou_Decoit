@@ -3,7 +3,7 @@ import { NgForm } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { UserService } from 'src/service/user.service';
 import { AuthUserService } from 'src/service/auth-user.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -16,10 +16,23 @@ export class LoginComponent implements AfterViewInit {
   private timeToShowSignUp = 100;
   private timeToHideSignUp = 400;
   private timeToHideAll = 500;
+  user = {
+    username: '',
+    role: 'USER',
+    password: '',
+    firstName: '',
+    lastname: '',
+    gender: '',
+    numberphone: null,
+    datenaissance: '',
+    country: '',
+    state: ''
+  };
 
   constructor(private userService:UserService,
     private userAuthService:AuthUserService,
     private router: Router,
+    
     public dialogRef: MatDialogRef<LoginComponent>
   ) {}
 
@@ -106,6 +119,23 @@ export class LoginComponent implements AfterViewInit {
         }
       );
     }
+  }
+  
+  register() {
+    // Log the user object to the console
+    console.log('User data:', this.user);
+
+    // Proceed with the registration request
+    this.userAuthService.register(this.user).subscribe(
+      response => {
+        console.log('Registration successful', response);
+        this.router.navigate(['/home']);
+      },
+      error => {
+        
+        console.error('Registration failed', error);
+      }
+    );
   }
 
 

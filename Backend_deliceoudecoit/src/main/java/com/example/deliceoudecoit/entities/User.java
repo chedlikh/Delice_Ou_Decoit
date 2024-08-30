@@ -1,13 +1,24 @@
 package com.example.deliceoudecoit.entities;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDate;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
-
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
 @Table(name = "user")
 public class User implements UserDetails {
@@ -18,23 +29,44 @@ public class User implements UserDetails {
     private Integer id;
 
     @Column(name = "first_name")
-    private String firstName;
+    private String firstname;
 
     @Column(name = "last_name")
-    private String lastName;
+    private String lastname;
 
-    @Column(name = "username")
+    @Column(name = "username",nullable = false, unique = true)
     private String username;
 
     @Column(name = "password")
     private String password;
 
+    @Column(name = "DateNaissance")
+    private LocalDate datenaissance;
+    @Column(name = "Genre")
+    private String gender;
+    @Column(name = "numerotelephone",nullable = false, unique = true)
+    private Integer numberphone;
+
     @Enumerated(value = EnumType.STRING)
-    private Role role;
+    private Role role=Role.USER;
 
 
     @OneToMany(mappedBy = "user")
     private List<Token> tokens;
+
+
+    @Column(name = "countryName")
+    private String country;
+
+
+    @Column(name = "stateName")
+    private String state;
+
+    @Column(name = "profile_image")
+    private String profileImage;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Establishment> establishments;
 
     public Integer getId() {
         return id;
@@ -45,19 +77,19 @@ public class User implements UserDetails {
     }
 
     public String getFirstName() {
-        return firstName;
+        return firstname;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setFirstName(String firstname) {
+        this.firstname = firstname;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getlastname() {
+        return lastname;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setlastname(String lastname) {
+        this.lastname = lastname;
     }
 
     public String getUsername() {

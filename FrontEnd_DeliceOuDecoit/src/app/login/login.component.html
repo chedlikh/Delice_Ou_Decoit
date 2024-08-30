@@ -45,20 +45,54 @@
  <div class="cont_form_login">
     <a routerLink="/home" (click)="hiddenLoginAndSignUp()"><i class="material-icons">&#xE5C4;</i></a>
     <h2>Se connecter</h2>
- <input type="email" ngModel name="username" id="username" placeholder="Email" />
- <input type="password" ngModel name="password" id="password" placeholder="Password" />
+ <input type="email" ngModel name="username" id="username1" placeholder="Email" />
+ <input type="password" ngModel name="password" id="password1" placeholder="Password" />
  <button type="submit" class="btn_login" (click)="changeToLogin()">LOGIN</button>
   </div>
 </form>
    <div class="cont_form_sign_up">
-    <a routerLink="/home" (click)="hiddenLoginAndSignUp()"><i class="material-icons">&#xE5C4;</i></a>
+    <a routerLink="" (click)="hiddenLoginAndSignUp()"><i class="material-icons">&#xE5C4;</i></a>
      <h2>SIGN UP</h2>
-<input type="text" placeholder="Email" />
-<input type="text" placeholder="User" />
-<input type="password" placeholder="Password" />
-<input type="password" placeholder="Confirm Password" />
-<button class="btn_sign_up" (click)="changeToSignUp()">SIGN UP</button>
-
+     <form (ngSubmit)="register()">
+      <div>
+        <label for="firstName">First Name:</label>
+        <input id="firstName" [(ngModel)]="user.firstName" name="firstName" required>
+      </div>
+      <div>
+        <label for="lastname">Last Name:</label>
+        <input id="lastname" [(ngModel)]="user.lastname" name="lastname" required>
+      </div>
+      <div>
+        <label for="username">Username:</label>
+        <input id="username" [(ngModel)]="user.username" name="username" required>
+      </div>
+      <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" [(ngModel)]="user.password" name="password" required>
+      </div>
+      <div>
+        <label for="datenaissance">Date of Birth:</label>
+        <input type="date" id="datenaissance" [(ngModel)]="user.datenaissance" name="datenaissance" required>
+      </div>
+      <div>
+        <label for="gender">Gender:</label>
+        <input id="gender" [(ngModel)]="user.gender" name="gender" required>
+      </div>
+      <div>
+        <label for="numberphone">Phone Number:</label>
+        <input id="numberphone" type="number" [(ngModel)]="user.numberphone" name="numberphone" required>
+      </div>
+      <div>
+        <label for="country">Country:</label>
+        <input id="country" [(ngModel)]="user.country" name="country" required>
+      </div>
+      <div>
+        <label for="state">State:</label>
+        <input id="state" [(ngModel)]="user.state" name="state" required>
+      </div>
+      <button class="btn_sign_up" type="submit">Register</button>
+    </form>
+    
   </div>
 
     </div>

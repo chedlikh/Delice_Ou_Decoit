@@ -47,21 +47,27 @@ public class AuthenticationService {
         if(repository.findByUsername(request.getUsername()).isPresent()) {
             return new AuthenticationResponse(null, null,"User already exist");
         }
+        List<User> existingUsers = repository.findByNumberphone(request.getNumberphone());
+
+        if (!existingUsers.isEmpty()) {
+            return new AuthenticationResponse(null,null,"This phone number is already registered.");
+        }
 
         User user = new User();
         user.setFirstName(request.getFirstName());
-        user.setLastName(request.getLastName());
+        user.setlastname(request.getlastname());
         user.setUsername(request.getUsername());
+        user.setCountry(request.getCountry());
+        user.setState(request.getState());
+        user.setGender(request.getGender());
+        user.setDatenaissance(request.getDatenaissance());
+        user.setNumberphone(request.getNumberphone());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-
-
         user.setRole(request.getRole());
 
         user = repository.save(user);
-
         String accessToken = jwtService.generateAccessToken(user);
         String refreshToken = jwtService.generateRefreshToken(user);
-
         saveUserToken(accessToken, refreshToken, user);
 
         return new AuthenticationResponse(accessToken, refreshToken,"User registration was successful");
@@ -81,7 +87,7 @@ public class AuthenticationService {
         String refreshToken = jwtService.generateRefreshToken(user);
         String username = user.getUsername();
         String firstname = user.getFirstName();
-        String lastname = user.getLastName();
+        String lastname = user.getlastname();
         String role = String.valueOf(user.getRole());
 
         revokeAllTokenByUser(user);

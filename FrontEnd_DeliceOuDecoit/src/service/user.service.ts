@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthUserService } from './auth-user.service';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -36,4 +37,6 @@ export class UserService {
     console.log(isMatch,allowedRoles,userRoles);
     return isMatch;
   }
+ 
+  
 }

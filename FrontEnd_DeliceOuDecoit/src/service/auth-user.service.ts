@@ -1,13 +1,17 @@
 import { Injectable } from '@angular/core';
+import { Observable, throwError } from 'rxjs';
+import { tap, catchError } from 'rxjs/operators';  
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthUserService {
+  private readonly PATH_OF_API = 'http://localhost:8089';
 
-  constructor() { }
+  constructor(private httpClient: HttpClient) { }
 
-  public setRoles(roles: []) {
+  public setRoles(roles: string[]) {
     localStorage.setItem('roles', JSON.stringify(roles));
   }
 
@@ -16,12 +20,12 @@ export class AuthUserService {
     if (roles) {
         const parsedRoles = JSON.parse(roles);
         // Ensure parsedRoles is an array
-        console.log('auth-userservice methode getroles role et parsedrole: ',roles,parsedRoles);
+        console.log('auth-userservice methode getroles role et parsedrole: ', roles, parsedRoles);
         return Array.isArray(parsedRoles) ? parsedRoles : [parsedRoles];
     } else {
         return []; // Return empty array if no roles are found
     }
-}
+  }
 
   public setToken(jwtToken: string) {
     localStorage.setItem('jwtToken', jwtToken);
@@ -30,21 +34,31 @@ export class AuthUserService {
   public getToken(): string {
     const token = localStorage.getItem('jwtToken');
     if (token) {
-      console.log('getToken',token);
+      console.log('getToken', token);
         return token;
     } else {
-      console.log('notoken',token);
+      console.log('notoken', token);
         return 'empty token'; // Return an empty string or handle the absence of a token as needed
     }
-}
+  }
 
   public clear() {
     localStorage.clear();
   }
 
-  public isLoggedIn() {
-    
-    return this.getRoles() && this.getToken();
+  public isLoggedIn(): boolean {
+    return !!this.getRoles().length && !!this.getToken();
   }
 
+  public register(user: any): Observable<any> {
+    console.log('Registering user:', user); // Log the request payload
+    return this.httpClient.post<any>(`${this.PATH_OF_API}/register`, user)
+      .pipe(
+        tap(response => console.log('Registration response:', response)), // Log the response
+        catchError(error => {
+          console.error('Registration error:', error);
+          return throwError(error);
+        })
+      );
+  }
 }
