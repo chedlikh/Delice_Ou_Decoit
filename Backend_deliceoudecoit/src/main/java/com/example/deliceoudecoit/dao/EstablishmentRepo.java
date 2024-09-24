@@ -6,5 +6,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface EstablishmentRepo extends JpaRepository<Establishment,Long> {
-    Optional<Establishment> findEstablishmentByName(String name);
+    Optional<Establishment> findEstablishmentByName(String nameId);
+    boolean existsByNameId(String nameId);
+    Optional<Establishment> findByNameId(String nameId);
+
+
+
 }

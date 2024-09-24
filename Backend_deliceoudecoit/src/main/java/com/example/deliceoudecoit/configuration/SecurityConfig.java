@@ -52,9 +52,12 @@ public class SecurityConfig {
                 .cors(withDefaults()) // Enable CORS support
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
-                        req->req.requestMatchers("/login/**","/register/**", "/refresh_token/**")
+                        req->req.requestMatchers("/login/**","/register/**", "/refresh_token/**","/establishment/**")
                                 .permitAll()
+                                .requestMatchers("/images/**").permitAll()
+                                .requestMatchers("/image/**").permitAll()
                                 .requestMatchers("/admin_only/**").hasAuthority("ADMIN")
+
                                 .anyRequest()
                                 .authenticated()
                 ).userDetailsService(userDetailsServiceImp)
@@ -97,4 +100,5 @@ public class SecurityConfig {
 
         return source;
     }
+
 }

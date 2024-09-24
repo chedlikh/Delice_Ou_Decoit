@@ -1,0 +1,15 @@
+<section class="gallery">
+    <ng-container *ngIf="images.length > 0; else noImages">
+      <div *ngFor="let image of images; let i = index" class="gallery__item">
+        <input type="radio" [id]="'img-' + (i + 1)" [checked]="i === 0" name="gallery" class="gallery__selector"/>
+        <img [src]="'http://localhost:8089/establishment/image/' + (image)" alt="Establishment Image" class="gallery__img"/>
+        <label [for]="'img-' + (i + 1)" class="gallery__thumb">
+          <img [src]="'http://localhost:8089/establishment/image/' + (image)" alt="Thumbnail" class="gallery__thumb-img"/>
+        </label>
+      </div>
+    </ng-container>
+    <ng-template #noImages>
+      <p>No images available for this establishment.</p>
+    </ng-template>
+  </section>
+  

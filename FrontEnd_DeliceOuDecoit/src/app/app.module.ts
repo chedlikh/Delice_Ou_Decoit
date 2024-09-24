@@ -20,6 +20,10 @@ import { RouterModule } from '@angular/router';
 import { AuthGuard } from 'src/_auth/auth.guard';
 import { AuthInterceptor } from 'src/_auth/auth.interceptor';
 import { UserService } from 'src/service/user.service';
+import { ProfileComponent } from './profile/profile.component';
+import { BonPlanComponent } from './bon-plan/bon-plan.component';
+import { InfoEstablishmentComponentComponent } from './info-establishment-component/info-establishment-component.component';
+import { PhotosEstablishmentComponent } from './photos-establishment/photos-establishment.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +35,10 @@ import { UserService } from 'src/service/user.service';
     UserComponent,
     AdminComponent,
     ForbiddenComponent,
+    ProfileComponent,
+    BonPlanComponent,
+    InfoEstablishmentComponentComponent,
+    PhotosEstablishmentComponent,
     
     
   ],

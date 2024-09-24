@@ -208,7 +208,7 @@ button {
 .header_section {
     width: 100%;
     float: left;
-    background-image: url(../../assets/bg/bbg-rs3.png);
+    background-image: url(../../assets/bg/bbg-rs3.webp);
     height: auto;
     background-size: 100%;
     padding: 0px 0px 50px 0px;
@@ -311,10 +311,9 @@ button {
 
 .header_main {
     width: 100%;
-    background-image: url(../../assets/images/header-bg.png);
+    background-image: url(../../assets/images/header-bg.webp);
     background-size: 100%;
-    padding: 10px 0px 37px 0px;
-    margin-top: -25px;
+    padding: 10px 0px 71px 0px;
 }
 
 /* header section end */
@@ -395,7 +394,7 @@ button {
 .background_bg{
     width: 100%;
     float: left;
-    background-image: url(../../assets/images/pizzabg.jpg);
+    background-image: url(../../assets/images/pizzabg.webp);
     height: auto;
 }
 /* background bg section end */
@@ -561,7 +560,7 @@ h1.watchs_taital::after {
 .testimonial_section{
     width: 100%;
     float: left;
-    background-image: url(../../assets/images/testimonial-bg.png);
+    background-image: url(../../assets/images/testimonial-bg.webp);
     height: auto;
     background-size: 100%;
     background-repeat: no-repeat;
@@ -735,7 +734,7 @@ textarea#comment::placeholder {
 .footer_section {
     width: 100%;
     float: left;
-    background-image: url(../../assets/images/footer-bg.png);
+    background-image: url(../../assets/images/footer-bg.webp);
     height: auto;
     padding-top: 90px;
     background-size: 100% 100%;

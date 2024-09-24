@@ -50,7 +50,7 @@ public class UserDetailsServiceImp implements UserDetailsService {
         // Then delete the user
         repository.delete(user);
     }
-    private final String uploadDir = "src/image_profile/";
+    private final String uploadDir = "src/images/image_profile/";
 
     public User uploadProfileImage(String username, MultipartFile file) throws IOException {
         User user = repository.findByUsername(username)

@@ -8,17 +8,23 @@ import com.example.deliceoudecoit.service.UserDetailsServiceImp;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.security.Principal;
+import java.net.MalformedURLException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @RestController
 public class AuthenticationController {
@@ -88,7 +94,8 @@ public class AuthenticationController {
                 user.getGender(),
                 user.getNumberphone(),
                 user.getCountry(),
-                user.getState()
+                user.getState(),
+                user.getProfileImage()
         );
 
         return ResponseEntity.ok(profileResponse);
@@ -113,7 +120,6 @@ public class AuthenticationController {
         user.setlastname(updateRequest.getlastname());
         user.setDatenaissance(updateRequest.getDatenaissance());
         user.setGender(updateRequest.getGender());
-        user.setNumberphone(updateRequest.getnumberphone());
         user.setCountry(updateRequest.getCountry());
         user.setState(updateRequest.getState());
 
@@ -159,6 +165,24 @@ public class AuthenticationController {
             return ResponseEntity.status(500).body("Failed to upload image: " + e.getMessage());
         }
     }
+    private final String uploadDir = "src/images/image_profile/";
+    @GetMapping("/images/{filename:.+}")
+    public ResponseEntity<Resource> getImage(@PathVariable String filename) {
+        try {
+            Path filePath = Paths.get(uploadDir).resolve(filename).normalize();
 
+            if (Files.exists(filePath)) {
+                Resource resource = new UrlResource(filePath.toUri());
+
+                return ResponseEntity.ok()
+                        .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + resource.getFilename() + "\"")
+                        .body(resource);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (MalformedURLException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
 
 }

@@ -20,7 +20,7 @@ export class AuthUserService {
     if (roles) {
         const parsedRoles = JSON.parse(roles);
         // Ensure parsedRoles is an array
-        console.log('auth-userservice methode getroles role et parsedrole: ', roles, parsedRoles);
+        
         return Array.isArray(parsedRoles) ? parsedRoles : [parsedRoles];
     } else {
         return []; // Return empty array if no roles are found
@@ -34,10 +34,10 @@ export class AuthUserService {
   public getToken(): string {
     const token = localStorage.getItem('jwtToken');
     if (token) {
-      console.log('getToken', token);
+     console.log(token)
         return token;
     } else {
-      console.log('notoken', token);
+      
         return 'empty token'; // Return an empty string or handle the absence of a token as needed
     }
   }
@@ -61,4 +61,5 @@ export class AuthUserService {
         })
       );
   }
+  
 }

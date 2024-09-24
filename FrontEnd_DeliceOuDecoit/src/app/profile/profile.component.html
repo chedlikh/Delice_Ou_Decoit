@@ -1,0 +1,96 @@
+<div *ngIf="user" class="container rounded bg-white mt-5 mb-5">
+    <div class="row">
+      <!-- Profile Picture and Basic Info -->
+      <div class="col-md-3 border-right">
+        <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+          <img class="rounded-circle mt-5" width="150px" [src]="'http://localhost:8089/images/' + (encodedProfileImage  | slice:31)" alt="Profile Picture" >
+          <i class="fa-solid fa-pen-to-square position-absolute" style="top: 24%; left: 69%; transform: translate(-50%, -50%); z-index: 1; cursor: pointer;" (click)="triggerFileInput()"></i>
+          <input type="file" id="profileImageInput" (change)="onProfileImageSelected($event)" style="display: none;">
+
+          <br>
+          <span class="font-weight-bold">{{ user.firstname }}</span>
+          <span class="text-black-50">{{ user.username }}</span>
+          <span class="text-black-50">{{ user.DateNaissance | date: 'dd MMMM yyyy' }}</span>
+        </div>
+      </div>
+      
+      <!-- Profile Settings Form -->
+      <div class="col-md-5 border-right">
+        <div class="p-3 py-5">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4 class="text-right">Profile Settings</h4>
+          </div>
+          
+          <!-- Form Fields -->
+          <div class="row mt-2">
+            <div class="col-md-6">
+              <label class="labels" for="first-name">Name</label>
+              <input id="first-name" type="text" class="form-control" placeholder="First Name" [(ngModel)]="user.firstname" aria-label="First Name">
+            </div>
+            <div class="col-md-6">
+              <label class="labels" for="surname">Surname</label>
+              <input id="surname" type="text" class="form-control" placeholder="Surname" [(ngModel)]="user.lastname" aria-label="Surname">
+            </div>
+          </div>
+          
+          <div class="row mt-3">
+            <div class="col-md-12">
+              <label class="labels" for="phone-number">Mobile Number</label>
+              <input id="phone-number" type="text" class="form-control" placeholder="Enter Phone Number" [(ngModel)]="user.numerotelephone" readonly aria-label="Mobile Number">
+            </div>
+            <div class="col-md-12">
+              <label class="labels" for="email">Email</label>
+              <input id="email" type="text" class="form-control" placeholder="Enter Email ID" [(ngModel)]="user.username" readonly aria-label="Email">
+            </div>
+            <div class="col-md-12">
+              <label class="labels" for="gender">Gender</label>
+              <input id="gender" type="text" class="form-control" placeholder="Gender" [(ngModel)]="user.Genre" aria-label="Gender">
+            </div>
+          </div>
+          
+          <div class="col-md-12">
+            <label class="labels" for="dob">Date of Birth</label>
+            <input id="dob" type="date" class="form-control" [(ngModel)]="user.DateNaissance" aria-label="Date of Birth">
+          </div>
+          
+          <div class="row mt-3">
+            <div class="col-md-6">
+              <label class="labels" for="country">Country</label>
+              <input id="country" type="text" class="form-control" placeholder="Country" [(ngModel)]="user.country" aria-label="Country">
+            </div>
+            <div class="col-md-6">
+              <label class="labels" for="state">State/Region</label>
+              <input id="state" type="text" class="form-control" placeholder="State/Region" [(ngModel)]="user.state" aria-label="State/Region">
+            </div>
+          </div>
+          
+          <div class="mt-5 text-center">
+            <button class="btn btn-primary profile-button" type="button" (click)="saveProfile()">Save Profile</button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Additional Details -->
+      <div class="col-md-4">
+        <div class="p-3 py-5">
+          <div class="d-flex justify-content-between align-items-center experience">
+            <span>Edit Experience</span>
+            <span class="border px-3 p-1 add-experience">
+              <i class="fa fa-plus"></i>&nbsp;Experience
+            </span>
+          </div>
+          <br>
+          <div class="col-md-12">
+            <label class="labels" for="experience">Experience in Designing</label>
+            <input id="experience" type="text" class="form-control" placeholder="Experience" value="" aria-label="Experience in Designing">
+          </div>
+          <br>
+          <div class="col-md-12">
+            <label class="labels" for="additional-details">Additional Details</label>
+            <input id="additional-details" type="text" class="form-control" placeholder="Additional Details" value="" aria-label="Additional Details">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
